@@ -114,7 +114,7 @@ class Logic(QMainWindow, Ui_MainWindow):
 
         #retrieves candidate choice
         candidate = self.get_candidate()
-        if self.get_candidate() == None:
+        if candidate == None:
             return
 
 
