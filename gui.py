@@ -69,6 +69,12 @@ class Ui_MainWindow(object):
         self.radioButton_democrat.setFont(font)
         self.radioButton_democrat.setObjectName("radioButton_democrat")
         self.horizontalLayout_3.addWidget(self.radioButton_democrat)
+        self.label_success = QtWidgets.QLabel(parent=self.centralwidget)
+        self.label_success.setGeometry(QtCore.QRect(340, 380, 111, 41))
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        self.label_success.setFont(font)
+        self.label_success.setObjectName("label_success")
         self.widget = QtWidgets.QWidget(parent=self.centralwidget)
         self.widget.setGeometry(QtCore.QRect(30, 250, 344, 27))
         self.widget.setObjectName("widget")
@@ -113,6 +119,7 @@ class Ui_MainWindow(object):
         self.radioButton_independent.setText(_translate("MainWindow", "Independent"))
         self.radioButton_republican.setText(_translate("MainWindow", "Republican"))
         self.radioButton_democrat.setText(_translate("MainWindow", "Democrat"))
+        self.label_success.setText(_translate("MainWindow", "Submitted!"))
         self.label_voter_id.setText(_translate("MainWindow", "Voter ID:"))
 
 

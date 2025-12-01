@@ -12,6 +12,10 @@ class Logic(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
 
+        #wipes successful label and sets color to green
+        self.label_success.setText("")
+        self.label_success.setStyleSheet("color: green;")
+
         #wipes radioButton selections, unchecks opt_in box, and clears voter_id
         self.hide_fields()
 
@@ -22,9 +26,10 @@ class Logic(QMainWindow, Ui_MainWindow):
         """
         clears the 3 radio buttons, unchecks opt_in box, and clears voter_id
         """
-        self.radioButton_independent.setChecked(False)
-        self.radioButton_republican.setChecked(False)
-        self.radioButton_democrat.setChecked(False)
+        for button in (self.radioButton_independent, self.radioButton_democrat, self.radioButton_republican):
+            button.setAutoExclusive(False)
+            button.setChecked(False)
+            button.setAutoExclusive(True)
         self.checkBox_opt_in.setChecked(False)
         self.lineEdit_voter_id.setText('')
 
@@ -39,10 +44,12 @@ class Logic(QMainWindow, Ui_MainWindow):
             voter_id = int(self.lineEdit_voter_id.text())
             if len(self.lineEdit_voter_id.text()) == 0:
                 QMessageBox.warning(self, "Input Error", "Please enter your numerical voter ID.")
+                self.label_success.setText("")
                 return False
 
         except ValueError:
             QMessageBox.warning(self, "Input Error", "Please enter your numerical voter ID.")
+            self.label_success.setText("")
             return False
 
 
@@ -59,6 +66,7 @@ class Logic(QMainWindow, Ui_MainWindow):
             for row in entries:
                 if row[0] == str(voter_id):
                     QMessageBox.warning(self, "Input Error", "Your voter id is already in use.")
+                    self.label_success.setText("")
                     return False
 
         #return True if the id is unique
@@ -68,7 +76,7 @@ class Logic(QMainWindow, Ui_MainWindow):
     def get_candidate(self) -> str | None:
         """
         returns the candidate as a string or exits when voter_id is empty
-        :return: returns the candidate choice as a string or None is empty
+        :return: returns the candidate choice as a string or None if empty
         """
 
         if self.radioButton_independent.isChecked():
@@ -79,6 +87,7 @@ class Logic(QMainWindow, Ui_MainWindow):
             return 'Republican'
 
         QMessageBox.warning(self, "Input Error", "Please select a candidate")
+        self.label_success.setText("")
         return None
 
     def check_opt_in(self) -> str:
@@ -100,6 +109,7 @@ class Logic(QMainWindow, Ui_MainWindow):
         if self.check_voter_id() == True:
             voter_id = self.lineEdit_voter_id.text().strip()
         else:
+            self.label_success.setText("")
             return
 
         #retrieves candidate choice
@@ -122,6 +132,12 @@ class Logic(QMainWindow, Ui_MainWindow):
             candidate = self.current_voter.get_party()
             opt_in = self.current_voter.get_opt_in()
             content.writerow([id, candidate, opt_in])
+
+        #clears choices after successful input
+        self.hide_fields()
+
+        #signals a successful submission
+        self.label_success.setText("Submitted")
 
 
 
