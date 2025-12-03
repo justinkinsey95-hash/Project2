@@ -1,5 +1,8 @@
 class Voter:
-    def __init__(self, id, party, opt_in):
+    def __init__(self, id, party, opt_in) -> None:
+        """
+        initializes the voter instance with id, party, and opt_in
+        """
         self.__voter_id = id
         self.__party = party
         self.__opt_in = opt_in
